@@ -1,9 +1,11 @@
 require 'test_helper'
 
 class UsersControllerTest < ActionController::TestCase
-  # setup do
-  #   @user = users(:one)
-  # end
+  include AssertJson
+  setup do
+    # @user = users(:one)
+    @controller = UsersController.new
+  end
 
   # test "should get index" do
   #   get :index
@@ -16,13 +18,18 @@ class UsersControllerTest < ActionController::TestCase
   #   assert_response :success
   # end
 
-  # test "should create user" do
-  #   assert_difference('User.count') do
-  #     post :create, user: {  }
-  #   end
-
-  #   assert_redirected_to user_path(assigns(:user))
-  # end
+  test 'should create user' do
+    assert_difference 'User.count' do
+      post :create, user: { password: 'password' }
+    end
+    assert_json @response.body do
+      has :id
+      has_not :password_hash
+      has_not :password
+    end
+    user = User.find JSON.parse(@response.body)['id']
+    assert user.password == 'password'
+  end
 
   # test "should show user" do
   #   get :show, id: @user

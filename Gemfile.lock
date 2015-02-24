@@ -31,6 +31,8 @@ GEM
       activerecord (>= 3.1)
       uuidtools
     arel (5.0.1.20140414130214)
+    assert_json (0.2.3)
+      activesupport
     bcrypt (3.1.10)
     builder (3.2.2)
     coffee-rails (4.0.1)
@@ -115,6 +117,7 @@ PLATFORMS
 
 DEPENDENCIES
   activeuuid
+  assert_json
   bcrypt (~> 3.1.7)
   coffee-rails (~> 4.0.0)
   jbuilder (~> 2.0)

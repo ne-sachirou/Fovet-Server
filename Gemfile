@@ -40,3 +40,4 @@ gem 'bcrypt', '~> 3.1.7'
 
 gem 'activeuuid'
 gem 'jwt'
+gem 'assert_json', group: :test

@@ -4,8 +4,8 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-#  column: value
+one:
+  password_hash: "$2a$10$mvYlS5zG31ENTdV/V5X01OsFDzGWT8GZmcAfIxiv.hxCKJid043Ou"
+
+two:
+  password_hash: "$2a$10$jSfTgrMKwbMNsZJcGvBSWOnPVmcNtxPAhB2LXKAzitHlBKD3zUili"

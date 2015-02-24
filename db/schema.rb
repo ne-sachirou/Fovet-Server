@@ -31,6 +31,7 @@ ActiveRecord::Schema.define(version: 20150211115041) do
   end
 
   create_table "users", force: true do |t|
+    t.string   "password_hash", null: false
     t.datetime "created_at"
     t.datetime "updated_at"
   end

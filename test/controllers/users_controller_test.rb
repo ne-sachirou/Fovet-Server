@@ -3,7 +3,7 @@ require 'test_helper'
 class UsersControllerTest < ActionController::TestCase
   include AssertJson
   setup do
-    # @user = users(:one)
+    @user = users :one
     @controller = UsersController.new
   end
 
@@ -29,6 +29,16 @@ class UsersControllerTest < ActionController::TestCase
     end
     user = User.find JSON.parse(@response.body)['id']
     assert user.password == 'password'
+  end
+
+  test 'should login' do
+    post :login, id: @user.id, password: 'password'
+    assert_json @response.body do
+      has :token
+    end
+    token = JWT.decode(JSON.parse(@response.body)['token'], ENV['JWT_SECRET'])[0]
+    assert_equal @user.id, token['user_id']
+    assert Time.now.to_i < token['expiration'] && token['expiration'] <= Time.now.to_i + 3600
   end
 
   # test "should show user" do

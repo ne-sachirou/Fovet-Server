@@ -13,10 +13,12 @@ class ApplicationController < ActionController::Base
     rescue JWT::DecodeError
       raise Forbidden
     end
-    if token[:expiration] < Time.now.to_i
+    raise Forbidden if token['expiration'] < Time.now.to_i
+    begin
+      @user = User.find token['user_id']
+    rescue ActiveRecord::RecordNotFound
       raise Forbidden
     end
-    @user = User.find token[:user_id]
   end
 
   class Forbidden < Exception; end

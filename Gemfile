@@ -39,5 +39,9 @@ gem 'bcrypt', '~> 3.1.7'
 # gem 'debugger', group: [:development, :test]
 
 gem 'activeuuid'
+gem 'jpeg'
 gem 'jwt'
-gem 'assert_json', group: :test
+
+group :test do
+  gem 'assert_json'
+end

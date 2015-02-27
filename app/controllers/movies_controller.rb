@@ -1,5 +1,5 @@
 class MoviesController < ApplicationController
-  before_action :set_movie, only: [:show, :destroy, :thumbup]
+  before_action :set_movie, only: [:show, :destroy, :get_file, :thumbup]
   before_action :auth_token
 
   # GET /movies
@@ -21,7 +21,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new movie_params
     @movie.uuid = UUIDTools::UUID.random_create
     @movie.user = @user
-    File.open("/tmp/#{@movie.uuid}", 'wb'){|f| f.write params[:file].read }
+    @movie.save_file params[:file]
     if @movie.save
       render 'show.json', status: :created
     else
@@ -43,7 +43,7 @@ class MoviesController < ApplicationController
   end
 
   def get_file
-    render file: "/tmp/#{params[:uuid]}"
+    render file: @movie.filename
   end
 
   def thumbup

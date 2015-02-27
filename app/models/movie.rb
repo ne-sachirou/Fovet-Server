@@ -12,6 +12,20 @@ class Movie < ActiveRecord::Base
       where(arel_table[:long].lteq long + 0.1)
   end
 
+  def filename
+    "/tmp/#{uuid}"
+  end
+
+  def save_file file
+    File.open(filename, 'wb'){|f| f.write file.read }
+    begin
+      Jpeg.open filename
+    rescue Jpeg::Error
+      destroy_file
+      raise
+    end
+  end
+
   def thumbup
     self.count -= 1
     save
@@ -29,6 +43,6 @@ class Movie < ActiveRecord::Base
   end
 
   def destroy_file
-    FileUtils.rm "/tmp/#{uuid}"
+    File.delete filename if File.exists? filename
   end
 end

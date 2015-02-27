@@ -1,7 +1,6 @@
 class User < ActiveRecord::Base
   include BCrypt
   has_many :movies, dependent: :destroy
-  has_many :thumbedup_movies, dependent: :destroy
   validate :password_is_not_empty
 
   def password

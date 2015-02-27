@@ -1,7 +1,6 @@
 class Movie < ActiveRecord::Base
   include ActiveUUID::UUID
   belongs_to :user
-  has_many :thumbedup_movies, dependent: :destroy
   before_save :destroy_exhausted
   after_destroy :destroy_file
 

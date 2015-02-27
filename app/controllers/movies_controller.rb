@@ -42,6 +42,10 @@ class MoviesController < ApplicationController
     render 'index.json'
   end
 
+  def get_file
+    render file: "/tmp/#{params[:uuid]}"
+  end
+
   def thumbup
     @movie.thumbup
     head :no_content
@@ -56,6 +60,6 @@ class MoviesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def movie_params
-    params.require(:movie).permit :count, :lat, :long
+    params.require(:movie).permit :lat, :long
   end
 end

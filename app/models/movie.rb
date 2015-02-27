@@ -3,6 +3,7 @@ class Movie < ActiveRecord::Base
   belongs_to :user
   has_many :thumbedup_movies, dependent: :destroy
   before_save :destroy_exhausted
+  after_destroy :destroy_file
 
   scope :nearby, -> lat, long do
     where(arel_table[:lat].gteq lat - 0.1).
@@ -25,5 +26,9 @@ class Movie < ActiveRecord::Base
     else
       true
     end
+  end
+
+  def destroy_file
+    FileUtils.rm "/tmp/#{uuid}"
   end
 end

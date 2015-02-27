@@ -26,18 +26,22 @@ class MoviesControllerTest < ActionController::TestCase
     end
   end
 
-  # test "should get new" do
-  #   get :new
-  #   assert_response :success
-  # end
-
-  # test "should create movie" do
-  #   assert_difference('Movie.count') do
-  #     post :create, movie: { count: @movie.count, lat: @movie.lat, long: @movie.long, user_id: @movie.user_id, uuid: @movie.uuid }
-  #   end
-
-  #   assert_redirected_to movie_path(assigns(:movie))
-  # end
+  test 'should create movie' do
+    token = login
+    assert_difference 'Movie.count' do
+      post :create, movie: { lat: 1.5, long: 1.5, file: fixture_file_upload('1.jpg', 'image/jpeg') }, token: token
+    end
+    assert_response :created
+    assert_json @response.body do
+      has :count
+      has :lat
+      has :long
+      has :uuid
+      has_not :id
+      has_not :user_id
+    end
+    Movie.destroy_all
+  end
 
   test 'should show movie' do
     token = login
@@ -52,11 +56,6 @@ class MoviesControllerTest < ActionController::TestCase
       has_not :user_id
     end
   end
-
-  # test "should get edit" do
-  #   get :edit, id: @movie
-  #   assert_response :success
-  # end
 
   # test "should update movie" do
   #   patch :update, id: @movie, movie: { count: @movie.count, lat: @movie.lat, long: @movie.long, user_id: @movie.user_id, uuid: @movie.uuid }

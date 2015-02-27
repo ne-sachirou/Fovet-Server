@@ -11,7 +11,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_difference 'User.count' do
       post :create, user: { password: 'password' }
     end
-    assert_response :success
+    assert_response :created
     assert_json @response.body do
       has :id
       has_not :password_hash

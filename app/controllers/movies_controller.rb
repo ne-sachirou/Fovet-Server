@@ -13,7 +13,6 @@ class MoviesController < ApplicationController
   # GET /movies/1
   # GET /movies/1.json
   def show
-    raise Forbidden if @movie.user != @user
     render 'show.json'
   end
 
@@ -23,7 +22,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new movie_params
     @movie.uuid = UUIDTools::UUID.random_create
     @movie.user = @user
-    @movie.save_file params[:file]
+    @movie.save_file params[:movie][:file]
     if @movie.save
       render 'show.json', status: :created
     else
@@ -50,7 +49,7 @@ class MoviesController < ApplicationController
 
   def thumbup
     @movie.thumbup
-    head :no_content
+    head :ok
   end
 
   private

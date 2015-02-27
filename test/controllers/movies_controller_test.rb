@@ -57,16 +57,11 @@ class MoviesControllerTest < ActionController::TestCase
     end
   end
 
-  # test "should update movie" do
-  #   patch :update, id: @movie, movie: { count: @movie.count, lat: @movie.lat, long: @movie.long, user_id: @movie.user_id, uuid: @movie.uuid }
-  #   assert_redirected_to movie_path(assigns(:movie))
-  # end
-
-  # test "should destroy movie" do
-  #   assert_difference('Movie.count', -1) do
-  #     delete :destroy, id: @movie
-  #   end
-
-  #   assert_redirected_to movies_path
-  # end
+  test 'should destroy movie' do
+    token = login
+    assert_difference 'Movie.count', -1 do
+      delete :destroy, id: @movie.uuid.to_param, token: token
+    end
+    assert_response :no_content
+  end
 end

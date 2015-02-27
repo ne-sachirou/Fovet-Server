@@ -26,7 +26,7 @@ class UsersControllerTest < ActionController::TestCase
     assert_difference 'User.count', -1 do
       delete :destroy, id: @user, token: token
     end
-    assert_response :success
+    assert_response :no_content
   end
 
   test 'should login' do

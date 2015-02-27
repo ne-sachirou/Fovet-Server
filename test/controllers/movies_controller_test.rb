@@ -1,15 +1,30 @@
 require 'test_helper'
 
 class MoviesControllerTest < ActionController::TestCase
-  # setup do
-  #   @movie = movies(:one)
-  # end
+  include AssertJson
+  setup do
+    @movie = movies :one
+    @movie.save_file File.new('test/fixtures/1.jpg', 'rb')
+    @movie.user = users :one
+    @movie.save
+    @controller = MoviesController.new
+  end
 
-  # test "should get index" do
-  #   get :index
-  #   assert_response :success
-  #   assert_not_nil assigns(:movies)
-  # end
+  test 'should get index' do
+    token = login
+    get :index, token: token
+    assert_response :success
+    assert_json @response.body do
+      item 0 do
+        has :count
+        has :lat
+        has :long
+        has :uuid
+        has_not :id
+        has_not :user_id
+      end
+    end
+  end
 
   # test "should get new" do
   #   get :new
@@ -24,10 +39,19 @@ class MoviesControllerTest < ActionController::TestCase
   #   assert_redirected_to movie_path(assigns(:movie))
   # end
 
-  # test "should show movie" do
-  #   get :show, id: @movie
-  #   assert_response :success
-  # end
+  test 'should show movie' do
+    token = login
+    get :show, id: @movie.uuid.to_param, token: token
+    assert_response :success
+    assert_json @response.body do
+      has :count
+      has :lat
+      has :long
+      has :uuid
+      has_not :id
+      has_not :user_id
+    end
+  end
 
   # test "should get edit" do
   #   get :edit, id: @movie

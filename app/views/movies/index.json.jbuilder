@@ -1,4 +1,4 @@
 json.array!(@movies) do |movie|
-  json.extract! movie, :id, :count, :lat, :long, :uuid, :user_id
-  json.url movie_url(movie, format: :json)
+  json.extract! movie, :count, :lat, :long, :uuid
+  json.url movie_url(movie.uuid.to_param, format: :json)
 end

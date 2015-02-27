@@ -44,11 +44,4 @@ class UsersControllerTest < ActionController::TestCase
   #   patch :update, id: @user, user: {  }
   #   assert_redirected_to user_path(assigns(:user))
   # end
-
-  private
-
-  def login user = @user, password = 'password'
-    post :login, id: user.id, password: password
-    JSON.parse(@response.body)['token']
-  end
 end

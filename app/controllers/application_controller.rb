@@ -4,8 +4,6 @@ class ApplicationController < ActionController::Base
   protect_from_forgery with: :exception
 
   rescue_from Forbidden do |ex|
-    head :no_content, status: 403
+    head :forbidden
   end
-
-  class Forbidden < Exception; end
 end

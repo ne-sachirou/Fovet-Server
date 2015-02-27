@@ -5,13 +5,13 @@ module AuthToken
     begin
       token = JWT.decode(params[:token], ENV['JWT_SECRET'])[0]
     rescue JWT::DecodeError
-      raise ApplicationController::Forbidden
+      raise Forbidden
     end
-    raise ApplicationController::Forbidden if token['expiration'] < Time.now.to_i
+    raise Forbidden if token['expiration'] < Time.now.to_i
     begin
       @user = User.find token['user_id']
     rescue ActiveRecord::RecordNotFound
-      raise ApplicationController::Forbidden
+      raise Forbidden
     end
   end
 end

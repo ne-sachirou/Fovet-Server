@@ -1,6 +1,6 @@
 class MoviesController < ApplicationController
   include AuthToken
-  before_action :set_movie, only: [:show, :destroy, :get_file, :thumbup]
+  before_action :set_movie, only: [:show, :destroy, :file, :thumbup]
   before_action :auth_token
 
   # GET /movies
@@ -38,15 +38,18 @@ class MoviesController < ApplicationController
     head :no_content
   end
 
+  # GET /movies/nearby
   def nearby
     @movies = Movie.nearby params[:lat], params[:long]
     render 'index.json'
   end
 
-  def get_file
-    render file: @movie.filename
+  # GET /movies/1/file
+  def file
+    send_file @movie.filename, type: 'image/jpeg'
   end
 
+  # POST /movies/1/thumbup
   def thumbup
     @movie.thumbup
     head :ok

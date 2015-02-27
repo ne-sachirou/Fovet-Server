@@ -7,7 +7,7 @@ Rails.application.routes.draw do
   resources :movies, only: [:index, :show, :create, :destroy]
   namespace :movies do
     get :nearby
-    get ':uuid/file' => :get_file
-    post ':uuid/thumbup' => :thumbup
+    get ':id/file' => :file
+    post ':id/thumbup' => :thumbup
   end
 end

@@ -64,4 +64,36 @@ class MoviesControllerTest < ActionController::TestCase
     end
     assert_response :no_content
   end
+
+  test 'Should get nearby movies.' do
+    token = login
+    get :nearby, lat: 1.5, long: 1.5, token: token
+    assert_response :success
+    assert_json @response.body do
+      item 0 do
+        has :count
+        has :lat
+        has :long
+        has :uuid
+        has_not :id
+        has_not :user_id
+      end
+    end
+  end
+
+  test 'Should get movie file.' do
+    token = login
+    get :file, id: @movie.uuid.to_param, token: token
+    assert_response :success
+    assert_equal 'image/jpeg', @response.content_type
+    assert_equal File.new('test/fixtures/1.jpg', 'rb').read, @response.body
+  end
+
+  test 'Should thumbup movie.' do
+    token = login
+    assert_difference '@movie.reload.count', -1 do
+      post :thumbup, id: @movie.uuid.to_param, token: token
+    end
+    assert_response :ok
+  end
 end

@@ -1,5 +1,6 @@
 class UsersController < ApplicationController
   before_action :set_user, only: [:login]
+  before_action :auth_token, only: [:destroy]
 
   # POST /users
   # POST /users.json
@@ -15,7 +16,6 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
-    auth_token
     head :no_content
   end
 
@@ -32,13 +32,14 @@ class UsersController < ApplicationController
   end
 
   private
-    # Use callbacks to share common setup or constraints between actions.
-    def set_user
-      @user = User.find params[:id]
-    end
 
-    # Never trust parameters from the scary internet, only allow the white list through.
-    def user_params
-      params.require(:user).permit :password
-    end
+  # Use callbacks to share common setup or constraints between actions.
+  def set_user
+    @user = User.find params[:id]
+  end
+
+  # Never trust parameters from the scary internet, only allow the white list through.
+  def user_params
+    params.require(:user).permit :password
+  end
 end

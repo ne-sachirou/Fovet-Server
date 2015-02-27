@@ -7,21 +7,11 @@ class UsersControllerTest < ActionController::TestCase
     @controller = UsersController.new
   end
 
-  # test "should get index" do
-  #   get :index
-  #   assert_response :success
-  #   assert_not_nil assigns(:users)
-  # end
-
-  # test "should get new" do
-  #   get :new
-  #   assert_response :success
-  # end
-
   test 'should create user' do
     assert_difference 'User.count' do
       post :create, user: { password: 'password' }
     end
+    assert_response :success
     assert_json @response.body do
       has :id
       has_not :password_hash
@@ -33,6 +23,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should login' do
     post :login, id: @user.id, password: 'password'
+    assert_response :success
     assert_json @response.body do
       has :token
     end
@@ -40,16 +31,6 @@ class UsersControllerTest < ActionController::TestCase
     assert_equal @user.id, token['user_id']
     assert Time.now.to_i < token['expiration'] && token['expiration'] <= Time.now.to_i + 3600
   end
-
-  # test "should show user" do
-  #   get :show, id: @user
-  #   assert_response :success
-  # end
-
-  # test "should get edit" do
-  #   get :edit, id: @user
-  #   assert_response :success
-  # end
 
   # test "should update user" do
   #   patch :update, id: @user, user: {  }

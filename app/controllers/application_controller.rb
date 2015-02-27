@@ -7,6 +7,10 @@ class ApplicationController < ActionController::Base
     head :no_content, status: 403
   end
 
+  class Forbidden < Exception; end
+
+  protected
+
   def auth_token
     begin
       token = JWT.decode(params[:token], ENV['JWT_SECRET'])[0]
@@ -20,6 +24,4 @@ class ApplicationController < ActionController::Base
       raise Forbidden
     end
   end
-
-  class Forbidden < Exception; end
 end

@@ -6,5 +6,7 @@ class ThumbedupMovieTest < ActiveSupport::TestCase
     assert_includes columns, 'id'
     assert_includes columns, 'movie_id'
     assert_includes columns, 'user_id'
+    assert_includes columns, 'created_at'
+    assert_includes columns, 'updated_at'
   end
 end

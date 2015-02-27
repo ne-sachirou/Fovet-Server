@@ -1,4 +1,5 @@
 class MoviesController < ApplicationController
+  include AuthToken
   before_action :set_movie, only: [:show, :destroy, :get_file, :thumbup]
   before_action :auth_token
 

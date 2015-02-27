@@ -21,13 +21,21 @@ class UsersControllerTest < ActionController::TestCase
     assert user.password == 'password'
   end
 
+  test 'should destroy user' do
+    token = login
+    assert_difference 'User.count', -1 do
+      delete :destroy, id: @user, token: token
+    end
+    assert_response :success
+  end
+
   test 'should login' do
-    post :login, id: @user.id, password: 'password'
+    token = login
     assert_response :success
     assert_json @response.body do
       has :token
     end
-    token = JWT.decode(JSON.parse(@response.body)['token'], ENV['JWT_SECRET'])[0]
+    token = JWT.decode(token, ENV['JWT_SECRET'])[0]
     assert_equal @user.id, token['user_id']
     assert Time.now.to_i < token['expiration'] && token['expiration'] <= Time.now.to_i + 3600
   end
@@ -37,11 +45,10 @@ class UsersControllerTest < ActionController::TestCase
   #   assert_redirected_to user_path(assigns(:user))
   # end
 
-  # test "should destroy user" do
-  #   assert_difference('User.count', -1) do
-  #     delete :destroy, id: @user
-  #   end
+  private
 
-  #   assert_redirected_to users_path
-  # end
+  def login user = @user, password = 'password'
+    post :login, id: user.id, password: password
+    JSON.parse(@response.body)['token']
+  end
 end

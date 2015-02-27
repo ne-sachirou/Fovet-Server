@@ -1,4 +1,5 @@
 class UsersController < ApplicationController
+  include AuthToken
   before_action :set_user, only: [:login]
   before_action :auth_token, only: [:destroy]
 
@@ -16,6 +17,7 @@ class UsersController < ApplicationController
   # DELETE /users/1
   # DELETE /users/1.json
   def destroy
+    @user.destroy
     head :no_content
   end
 

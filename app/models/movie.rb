@@ -6,16 +6,17 @@ class Movie < ActiveRecord::Base
   after_destroy :destroy_file
 
   scope :nearby, -> lat, long do
+    lat, long = lat.to_f, long.to_f
     where(arel_table[:lat].gteq lat - 0.1).
       where(arel_table[:lat].lteq lat + 0.1).
       where(arel_table[:long].gteq long - 0.1).
       where(arel_table[:long].lteq long + 0.1)
   end
 
-  def filename
-    "/tmp/#{uuid}"
-  end
+  def filename; "/tmp/#{uuid}"; end
 
+  # @param [#read] file
+  # @raise [Jpeg::Error] The file contents is not a JPEG.
   def save_file file
     File.open(filename, 'wb'){|f| f.write file.read }
     begin

@@ -5,8 +5,8 @@ class MovieTest < ActiveSupport::TestCase
     columns = Movie.columns.map &:name
     assert_includes columns, 'id'
     assert_includes columns, 'count'
-    assert_includes columns, 'lat'
-    assert_includes columns, 'long'
+    assert_includes columns, 'latitude'
+    assert_includes columns, 'longitude'
     assert_includes columns, 'uuid'
     assert_includes columns, 'user_id'
     assert_includes columns, 'created_at'
@@ -28,7 +28,7 @@ class MovieTest < ActiveSupport::TestCase
   end
 
   test 'Movies count is 0 should be destroyed.' do
-    movie = Movie.create count: 1, lat: 1.5, long: 1.5, uuid: '66a92d96-a86a-452c-8df2-fb181147a52e', user_id: 1
+    movie = Movie.create count: 1, latitude: 1.5, longitude: 1.5, uuid: '66a92d96-a86a-452c-8df2-fb181147a52e', user_id: 1
     movie.save_file File.new('test/fixtures/1.jpg', 'rb')
     movie.thumbup
     assert_equal 0, movie.count

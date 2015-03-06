@@ -15,8 +15,8 @@ ActiveRecord::Schema.define(version: 20150211115003) do
 
   create_table "movies", force: true do |t|
     t.integer  "count",      default: 10, null: false
-    t.float    "lat",                     null: false
-    t.float    "long",                    null: false
+    t.float    "latitude",                null: false
+    t.float    "longitude",               null: false
     t.uuid     "uuid",                    null: false
     t.integer  "user_id",                 null: false
     t.datetime "created_at"

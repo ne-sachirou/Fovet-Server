@@ -4,12 +4,12 @@ class Movie < ActiveRecord::Base
   before_save :destroy_exhausted
   after_destroy :destroy_file
 
-  scope :nearby, -> lat, long do
-    lat, long = lat.to_f, long.to_f
-    where(arel_table[:lat].gteq lat - 0.1).
-      where(arel_table[:lat].lteq lat + 0.1).
-      where(arel_table[:long].gteq long - 0.1).
-      where(arel_table[:long].lteq long + 0.1)
+  scope :nearby, -> latitude, longitude do
+    latitude, longitude = latitude.to_f, longitude.to_f
+    where(arel_table[:latitude].gteq latitude - 0.1).
+      where(arel_table[:latitude].lteq latitude + 0.1).
+      where(arel_table[:longitude].gteq longitude - 0.1).
+      where(arel_table[:longitude].lteq longitude + 0.1)
   end
 
   def filename; "/tmp/#{uuid}"; end

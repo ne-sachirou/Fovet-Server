@@ -40,7 +40,7 @@ class MoviesController < ApplicationController
 
   # GET /movies/nearby
   def nearby
-    @movies = Movie.nearby params[:lat], params[:long]
+    @movies = Movie.nearby params[:latitude], params[:longitude]
     render 'index.json'
   end
 
@@ -64,6 +64,6 @@ class MoviesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def movie_params
-    params.require(:movie).permit :lat, :long
+    params.require(:movie).permit :latitude, :longitude
   end
 end

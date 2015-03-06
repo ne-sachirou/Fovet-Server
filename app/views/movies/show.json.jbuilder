@@ -1,1 +1,1 @@
-json.extract! @movie, :count, :lat, :long, :uuid, :created_at, :updated_at
+json.extract! @movie, :count, :latitude, :longitude, :uuid, :created_at, :updated_at

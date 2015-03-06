@@ -2,14 +2,14 @@
 
 one:
   count: 10
-  lat: 1.5
-  long: 1.5
+  latitude: 1.5
+  longitude: 1.5
   uuid: "b066e127-e3e7-44c3-9dc8-bc26d5792ccb"
   user_id: 1
 
 two:
   count: 10
-  lat: 1.5
-  long: 1.5
+  latitude: 1.5
+  longitude: 1.5
   uuid: "8e76a847-9d52-4b3d-b682-3383647788e7"
   user_id: 2

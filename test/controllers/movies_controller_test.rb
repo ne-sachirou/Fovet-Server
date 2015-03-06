@@ -17,8 +17,8 @@ class MoviesControllerTest < ActionController::TestCase
     assert_json @response.body do
       item 0 do
         has :count
-        has :lat
-        has :long
+        has :latitude
+        has :longitude
         has :uuid
         has_not :id
         has_not :user_id
@@ -29,13 +29,13 @@ class MoviesControllerTest < ActionController::TestCase
   test 'should create movie' do
     token = login
     assert_difference 'Movie.count' do
-      post :create, movie: { lat: 1.5, long: 1.5, file: fixture_file_upload('1.jpg', 'image/jpeg') }, token: token
+      post :create, movie: { latitude: 1.5, longitude: 1.5, file: fixture_file_upload('1.jpg', 'image/jpeg') }, token: token
     end
     assert_response :created
     assert_json @response.body do
       has :count
-      has :lat
-      has :long
+      has :latitude
+      has :longitude
       has :uuid
       has_not :id
       has_not :user_id
@@ -49,8 +49,8 @@ class MoviesControllerTest < ActionController::TestCase
     assert_response :success
     assert_json @response.body do
       has :count
-      has :lat
-      has :long
+      has :latitude
+      has :longitude
       has :uuid
       has_not :id
       has_not :user_id
@@ -67,13 +67,13 @@ class MoviesControllerTest < ActionController::TestCase
 
   test 'Should get nearby movies.' do
     token = login
-    get :nearby, lat: 1.5, long: 1.5, token: token
+    get :nearby, latitude: 1.5, longitude: 1.5, token: token
     assert_response :success
     assert_json @response.body do
       item 0 do
         has :count
-        has :lat
-        has :long
+        has :latitude
+        has :longitude
         has :uuid
         has_not :id
         has_not :user_id

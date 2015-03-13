@@ -22,7 +22,7 @@ class MoviesController < ApplicationController
     @movie = Movie.new movie_params
     @movie.uuid = UUIDTools::UUID.random_create
     @movie.user = @user
-    @movie.save_file params[:movie][:file]
+    @movie.save_file params[:file]
     if @movie.save
       render 'show.json', status: :created
     else
@@ -64,6 +64,6 @@ class MoviesController < ApplicationController
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def movie_params
-    params.require(:movie).permit :latitude, :longitude
+    params.permit :latitude, :longitude
   end
 end

@@ -29,7 +29,7 @@ class MoviesControllerTest < ActionController::TestCase
   test 'should create movie' do
     token = login
     assert_difference 'Movie.count' do
-      post :create, movie: { latitude: 1.5, longitude: 1.5, file: fixture_file_upload('1.jpg', 'image/jpeg') }, token: token
+      post :create, latitude: 1.5, longitude: 1.5, file: fixture_file_upload('1.jpg', 'image/jpeg'), token: token
     end
     assert_response :created
     assert_json @response.body do

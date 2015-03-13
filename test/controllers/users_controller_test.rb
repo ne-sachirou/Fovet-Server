@@ -9,7 +9,7 @@ class UsersControllerTest < ActionController::TestCase
 
   test 'should create user' do
     assert_difference 'User.count' do
-      post :create, user: { password: 'password' }
+      post :create, password: 'password'
     end
     assert_response :created
     assert_json @response.body do

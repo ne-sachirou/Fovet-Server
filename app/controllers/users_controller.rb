@@ -1,6 +1,5 @@
 class UsersController < ApplicationController
   include AuthToken
-  before_action :set_user, only: [:login]
   before_action :auth_token, only: [:destroy]
 
   # POST /users
@@ -22,9 +21,12 @@ class UsersController < ApplicationController
   end
 
   def login
-    unless @user && @user.password == params[:password]
+    begin
+      @user = User.find params[:id]
+    rescue ActiveRecord::RecordNotFound
       raise Forbidden
     end
+    raise Forbidden unless @user.password == params[:password]
     token = {
       user_id:    @user.id,
       expiration: Time.now.to_i + 3600,
@@ -34,11 +36,6 @@ class UsersController < ApplicationController
   end
 
   private
-
-  # Use callbacks to share common setup or constraints between actions.
-  def set_user
-    @user = User.find params[:id]
-  end
 
   # Never trust parameters from the scary internet, only allow the white list through.
   def user_params

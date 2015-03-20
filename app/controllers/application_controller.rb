@@ -6,4 +6,8 @@ class ApplicationController < ActionController::Base
   rescue_from Forbidden do |ex|
     head :forbidden
   end
+
+  rescue_from  ActiveRecord::RecordNotFound do |ex|
+    head :not_found
+  end
 end

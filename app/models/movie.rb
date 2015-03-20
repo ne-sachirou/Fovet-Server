@@ -28,7 +28,11 @@ class Movie < ActiveRecord::Base
 
   def thumbup
     self.count -= 1
-    save
+    if count <= 0
+      destroy
+    else
+      save
+    end
   end
 
   private

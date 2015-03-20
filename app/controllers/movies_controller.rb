@@ -59,7 +59,7 @@ class MoviesController < ApplicationController
 
   # Use callbacks to share common setup or constraints between actions.
   def set_movie
-    @movie = Movie.where(uuid: params[:id]).first!
+    @movie = Movie.where(uuid: UUIDTools::UUID.serialize(params[:id])).first!
   end
 
   # Never trust parameters from the scary internet, only allow the white list through.
